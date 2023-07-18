@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 754062672}
-  m_IndirectSpecularColor: {r: 0.061766014, g: 0.102035575, b: 0.11989707, a: 1}
+  m_IndirectSpecularColor: {r: 0.06185629, g: 0.10238601, b: 0.119824365, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -252,6 +252,34 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!83 &170517532
+AudioClip:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AudioClip
+  m_LoadType: 0
+  m_Channels: 1
+  m_Frequency: 22050
+  m_BitsPerSample: 32
+  m_Length: 0
+  m_IsTrackerFormat: 0
+  m_Ambisonic: 0
+  m_SubsoundIndex: 0
+  m_PreloadAudioData: 1
+  m_LoadInBackground: 0
+  m_Legacy3D: 0
+  m_Resource:
+    m_Source: 
+    m_Offset: 0
+    m_Size: 0
+  m_CompressionFormat: 0
+  m_EditorResource:
+    m_Source: 
+    m_Offset: 0
+    m_Size: 0
+  m_EditorCompressionFormat: 0
 --- !u!1 &228574802
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +369,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 228574802}
   m_CullTransparentMesh: 0
+--- !u!1 &357981897 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 17d64aca57347f647a68b442aa003bac,
+    type: 3}
+  m_PrefabInstance: {fileID: 840571087}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &417876580
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,7 +858,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 17d64aca57347f647a68b442aa003bac,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17d64aca57347f647a68b442aa003bac, type: 3}
@@ -871,7 +905,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1425041701 stripped
 Transform:
@@ -902,7 +936,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!33 &1614587759
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1023,7 +1057,7 @@ MonoBehaviour:
   sample: {fileID: 1680633852}
   effect: {fileID: 2141927723}
   speedEffect: 1
-  scaleEffect: 1.2
+  scaleEffect: 1.5
 --- !u!114 &1676385771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1095,10 +1129,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9501685994c8f9a4a9d1bd13e5af4d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  androidAudioVisualizer: {fileID: 1614587758}
+  iosAudioVisualizer: {fileID: 357981897}
   isShowPopupAndroid: 1
   loading: {fileID: 1758134763}
   _audioSource: {fileID: 1680633854}
   audioCore: {fileID: 1680633853}
+  startTime: 0
+  endTime: 0
 --- !u!114 &1680633853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,7 +1182,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 170517532}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1425,23 +1463,28 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!4 &1680633857
-Transform:
+--- !u!224 &1680633857
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680633851}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.475, z: -4.4099994}
+  m_LocalPosition: {x: 0, y: 0, z: -4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1425041701}
   - {fileID: 1614587761}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 1.4749756}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1758134763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1632,7 +1675,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2141927723}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -1668,16 +1711,4 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2141927725}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1676385770}
-        m_TargetAssemblyTypeName: SpeechButton, Assembly-CSharp
-        m_MethodName: VibrateButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []

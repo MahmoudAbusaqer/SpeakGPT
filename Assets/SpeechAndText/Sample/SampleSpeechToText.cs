@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using OpenAI;
 using UnityEngine;
@@ -11,13 +10,16 @@ using Random = UnityEngine.Random;
 
 public class SampleSpeechToText : MonoBehaviour
 {
+    public GameObject androidAudioVisualizer;
+    public GameObject iosAudioVisualizer;
+
     public bool isShowPopupAndroid = true;
     public GameObject loading;
 
     private OpenAIApi openai = new OpenAIApi("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");
 
     private string prompt =
-        "Act as AI and you are a helpful and friendly AI with a conversational tone, conversations should be short unless I asked you to explain more.";
+        "Act as an AI and you are a helpful and friendly AI with a conversational tone, your conversations should be as short and helpful as possible unless I asked you to explain more but be short!!.";
 
     private const string BaseUrl = "http://54.166.66.9:59125/api/tts";
     private const string VoiceParameter = "en_UK/apope_low";
@@ -32,8 +34,18 @@ public class SampleSpeechToText : MonoBehaviour
 
     public AudioCore audioCore;
 
+    // public float startTime;
+    // public float endTime;
+
     void Start()
     {
+#if UNITY_IOS
+        androidAudioVisualizer.SetActive(false);
+        iosAudioVisualizer.SetActive(true);
+#else
+        iosAudioVisualizer.SetActive(false);
+        androidAudioVisualizer.SetActive(true);
+#endif
         audioCore = GetComponent<AudioCore>();
 
         audioCore.idleVelocity = new Vector2(0, 0);
@@ -66,7 +78,6 @@ public class SampleSpeechToText : MonoBehaviour
     //Speech To Text starts here
     public void StartRecording()
     {
-        // audioCore.idleNoiseIntensity = 1f;
 #if UNITY_EDITOR
 #else
         SpeechToText.Instance.StartRecording("Speak any");
@@ -75,8 +86,9 @@ public class SampleSpeechToText : MonoBehaviour
 
     public void StopRecording()
     {
+        // startTime = Time.time;
 #if UNITY_EDITOR
-        SendReply("Hi there");
+        SendReply("What do you know about Development Alternatives Incorporated - DAI");
         // OnResultSpeech("Not support in editor.");
 #else
         SpeechToText.Instance.StopRecording();
@@ -141,7 +153,9 @@ public class SampleSpeechToText : MonoBehaviour
         {
             var message = completionResponse.Choices[0].Message;
             message.Content = message.Content.Trim();
-
+            // endTime = Time.time;
+            // float time = endTime - startTime;
+            // Debug.Log("chatgpt Time: " + time);
             // Send the text generated from GPT-3.5 Turbo to Text To Speech API
             await SendPostRequest(message.Content);
             messages.Add(message);
@@ -156,6 +170,7 @@ public class SampleSpeechToText : MonoBehaviour
     // Text to Speech to make the AI speak
     private async Task SendPostRequest(string rawBody)
     {
+        // startTime = Time.time;
         string baseUrl = BaseUrl;
         var parameters = GetRequestParameters();
 
@@ -223,6 +238,9 @@ public class SampleSpeechToText : MonoBehaviour
             int randomValue1 = Random.Range(0, 2) == 0 ? -1 : 1;
             int randomValue2 = Random.Range(0, 2) == 0 ? -1 : 1;
             audioCore.idleVelocity = new Vector2(randomValue1 * 1, randomValue2 * 1);
+            // endTime = Time.time;
+            // float timeTaken = endTime - startTime;
+            // Debug.Log("tts Time taken: " + timeTaken);
             _audioSource.Play();
         }
         else

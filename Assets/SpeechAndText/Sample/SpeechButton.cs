@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.EventSystems;
-using System;
-using UnityEngine.Events;
+
 
 public class SpeechButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -18,6 +16,7 @@ public class SpeechButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         effect.SetActive(false);
         speed = speedEffect;
     }
+
     void Update()
     {
         if (effect.activeSelf)
@@ -27,10 +26,12 @@ public class SpeechButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             {
                 speed = -speedEffect;
             }
+
             if (scale < scaleEffect - 0.1f)
             {
                 speed = speedEffect;
             }
+
             effect.transform.localScale = new Vector3(scale, scale, 1);
         }
     }
@@ -38,25 +39,31 @@ public class SpeechButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public void OnPointerDown(PointerEventData eventData)
     {
         sample._audioSource.Stop();
+        Handheld.Vibrate();
         bool needEffect = true;
-// #if UNITY_ANDROID
-//         if (sample.isShowPopupAndroid)
-//         {
-//             needEffect = false;
-//         }
-// #endif
+#if UNITY_ANDROID
+        if (sample.isShowPopupAndroid)
+        {
+            needEffect = false;
+        }
+#endif
         if (needEffect)
         {
             effect.SetActive(true);
             scale = 1;
         }
+
         sample.StartRecording();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        effect.SetActive(false);
         sample.StopRecording();
+        effect.SetActive(false);
     }
-}
 
+    // public void VibrateButton()
+    // {
+    //     Handheld.Vibrate();
+    // }
+}
