@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b85d8c97a5d3ced4a804fd2395c957ab
+guid: 2f893fddfbb0245499adcc293313c5d7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -26,9 +26,9 @@ TextureImporter:
   vTOnly: 0
   ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
-  generateCubemap: 6
+  generateCubemap: 2
   cubemapConvolution: 0
-  seamlessCubemap: 0
+  seamlessCubemap: 1
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
@@ -54,7 +54,7 @@ TextureImporter:
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: 0
-  textureShape: 1
+  textureShape: 2
   singleChannelComponent: 0
   flipbookRows: 1
   flipbookColumns: 1
