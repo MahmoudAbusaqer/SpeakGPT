@@ -19,14 +19,18 @@ public class SampleSpeechToText : MonoBehaviour
     private OpenAIApi openai = new OpenAIApi("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");
 
     private string prompt =
-        "Act as an AI and you are a helpful and friendly AI with a conversational tone, your conversations should be as short and helpful as possible unless I asked you to explain more but be short!!.";
+        "Act as an AI and you are a helpful and friendly AI with a conversational tone, your answers should be as short and helpful as possible but being short is the most important thing.";
+    // "Act as an AI and you are a helpful and friendly AI with a conversational tone, your answers should be as short and helpful as possible unless I asked you to explain more but be short!!.";
 
     private const string BaseUrl = "http://54.166.66.9:59125/api/tts";
-    private const string VoiceParameter = "en_UK/apope_low";
-    private const string NoiseScaleParameter = "0.667";
-    private const string NoiseWParameter = "0.8";
-    private const string LengthScaleParameter = "1";
-    private const string SSMLParameter = "false";
+
+    private string VoiceParameter;
+    private string NoiseScaleParameter;
+    private string NoiseWParameter;
+    private string LengthScaleParameter;
+    private string SSMLParameter;
+
+    private Dictionary<string, string> voice;
 
     private List<ChatMessage> messages = new List<ChatMessage>();
 
@@ -34,11 +38,16 @@ public class SampleSpeechToText : MonoBehaviour
 
     public AudioCore audioCore;
 
-    // public float startTime;
-    // public float endTime;
+    public float startTime;
+    public float endTime;
 
     void Start()
     {
+        VoiceParameter = "en_US/ljspeech_low";
+        NoiseScaleParameter = "0.667";
+        NoiseWParameter = "0.8";
+        LengthScaleParameter = "1";
+        SSMLParameter = "false";
 #if UNITY_IOS
         androidAudioVisualizer.SetActive(false);
         iosAudioVisualizer.SetActive(true);
@@ -86,9 +95,10 @@ public class SampleSpeechToText : MonoBehaviour
 
     public void StopRecording()
     {
-        // startTime = Time.time;
+        startTime = Time.time;
 #if UNITY_EDITOR
-        SendReply("What do you know about Development Alternatives Incorporated - DAI");
+        SendReply("Hi there");
+        // SendReply("What do you know about Development Alternatives Incorporated - DAI");
         // OnResultSpeech("Not support in editor.");
 #else
         SpeechToText.Instance.StopRecording();
@@ -153,9 +163,9 @@ public class SampleSpeechToText : MonoBehaviour
         {
             var message = completionResponse.Choices[0].Message;
             message.Content = message.Content.Trim();
-            // endTime = Time.time;
-            // float time = endTime - startTime;
-            // Debug.Log("chatgpt Time: " + time);
+            endTime = Time.time;
+            float time = endTime - startTime;
+            Debug.Log("chatgpt Time: " + time);
             // Send the text generated from GPT-3.5 Turbo to Text To Speech API
             await SendPostRequest(message.Content);
             messages.Add(message);
@@ -200,15 +210,16 @@ public class SampleSpeechToText : MonoBehaviour
     // The parameters (Query Params) for the Text To Speech POST API
     private Dictionary<string, string> GetRequestParameters()
     {
-        return new Dictionary<string, string>()
-        {
-            { "voice", VoiceParameter },
-            { "noiseScale", NoiseScaleParameter },
-            { "noiseW", NoiseWParameter },
-            { "lengthScale", LengthScaleParameter },
-            { "ssml", SSMLParameter }
-        };
-    }
+        // if (voice == null)
+        // {
+        //     ChooseVoice(0);
+        // }
+        // foreach (string key in voice.Keys)
+        // {
+        //     Debug.Log(key + ": " + voice[key]);
+        // }
+        return voice;
+    } 
 
     // Sending the POST request to the Text To Speech API
     // The POST request is sent to the API and the response is processed
@@ -238,9 +249,9 @@ public class SampleSpeechToText : MonoBehaviour
             int randomValue1 = Random.Range(0, 2) == 0 ? -1 : 1;
             int randomValue2 = Random.Range(0, 2) == 0 ? -1 : 1;
             audioCore.idleVelocity = new Vector2(randomValue1 * 1, randomValue2 * 1);
-            // endTime = Time.time;
-            // float timeTaken = endTime - startTime;
-            // Debug.Log("tts Time taken: " + timeTaken);
+            endTime = Time.time;
+            float timeTaken = endTime - startTime;
+            Debug.Log("tts Time taken: " + timeTaken);
             _audioSource.Play();
         }
         else
@@ -270,4 +281,84 @@ public class SampleSpeechToText : MonoBehaviour
         return audioClip;
     }
     // Text To Speech ends here
+
+    public void ChooseVoice(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                // UK male
+                // VoiceParameter = "en_UK/apope_low";
+                // NoiseScaleParameter = "0.667";
+                // NoiseWParameter = "0.8";
+                // LengthScaleParameter = "1";
+                // SSMLParameter = "false";
+                // break;
+            case 1:
+                // US female
+                VoiceParameter = "en_US/ljspeech_low";
+                NoiseScaleParameter = "0.667";
+                NoiseWParameter = "0.8";
+                LengthScaleParameter = "1";
+                SSMLParameter = "false";
+                break;
+            case 2:
+                // US male
+                VoiceParameter = "en_US/hifi-tts_low";
+                NoiseScaleParameter = "0.333";
+                NoiseWParameter = "0.333";
+                LengthScaleParameter = "1";
+                SSMLParameter = "false";
+                break;
+            case 3:
+                // US male
+                VoiceParameter = "en_US/m-ailabs_low";
+                NoiseScaleParameter = "0.2";
+                NoiseWParameter = "0.2";
+                LengthScaleParameter = "1";
+                SSMLParameter = "false";
+
+                break;
+            case 4:
+                // UK female
+                VoiceParameter = "en_US/vctk_low";
+                NoiseScaleParameter = "0.333";
+                NoiseWParameter = "0.333";
+                LengthScaleParameter = "1.2";
+                SSMLParameter = "false";
+                break;
+            case 5:
+                // US male
+                VoiceParameter = "en_US/cmu-artctic_low";
+                NoiseScaleParameter = "0.333";
+                NoiseWParameter = "0.333";
+                LengthScaleParameter = "1";
+                SSMLParameter = "false";
+                break;
+            // default:
+            //     // UK male
+            //     VoiceParameter = "en_UK/apope_low";
+            //     NoiseScaleParameter = "0.667";
+            //     NoiseWParameter = "0.8";
+            //     LengthScaleParameter = "1";
+            //     SSMLParameter = "false";
+            //     break;
+        }
+
+        voice = new Dictionary<string, string>()
+        {
+            { "VoiceParameter", VoiceParameter },
+            { "NoiseScaleParameter", NoiseScaleParameter },
+            { "NoiseWParameter", NoiseWParameter },
+            { "LengthScaleParameter", LengthScaleParameter },
+            { "SSMLParameter", SSMLParameter }
+        };
+
+        foreach (string key in voice.Keys)
+        {
+            Debug.Log(key + ": " + voice[key]);
+        }
+
+        Debug.Log("voice: " + voice.Values.ToString());
+    }
 }
