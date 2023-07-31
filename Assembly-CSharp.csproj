@@ -41,6 +41,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\CanvasController.cs" />
      <Compile Include="Assets\SpeechAndText\Scripts\SpeechToText.cs" />
      <Compile Include="Assets\Scripts\CanvasHelper.cs" />
      <Compile Include="Assets\Scripts\SkyboxController.cs" />
@@ -49,6 +50,7 @@
      <Folder Include="Assets" />
      <Folder Include="Assets\SpeechAndText\Scripts" />
      <Folder Include="Assets\Settings" />
+     <Folder Include="Assets\Prefabs" />
      <Folder Include="Assets\Samples\VX Audio\1.2.0\Audio Visualizer Sample" />
      <Folder Include="Assets\SpeechAndText\Sample" />
      <Folder Include="Assets\Textures\Images" />
@@ -64,6 +66,7 @@
      <Folder Include="Assets\Samples\VX Audio\1.2.0" />
      <Folder Include="Assets\Scenes" />
      <Folder Include="Assets\Textures\Skybox" />
+     <Folder Include="Assets\Textures\Icons" />
      <Folder Include="Assets\IcoSphere" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.19f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
@@ -743,8 +746,8 @@
      <Reference Include="Unity.Searcher.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+     <Reference Include="Unity.2D.Sprite.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
@@ -767,11 +770,14 @@
      <Reference Include="Unity.Rider.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Jobs.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Jobs.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Jobs.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Jobs.Editor.dll</HintPath>
+     <Reference Include="Unity.RenderPipelines.Core.Runtime">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.UI">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>

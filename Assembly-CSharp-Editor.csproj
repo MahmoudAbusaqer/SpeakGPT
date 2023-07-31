@@ -787,8 +787,8 @@
      <Reference Include="Unity.Searcher.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+     <Reference Include="Unity.2D.Sprite.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
@@ -811,11 +811,14 @@
      <Reference Include="Unity.Rider.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Jobs.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Jobs.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Jobs.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Jobs.Editor.dll</HintPath>
+     <Reference Include="Unity.RenderPipelines.Core.Runtime">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.UI">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>

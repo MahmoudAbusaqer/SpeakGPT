@@ -5,6 +5,7 @@ using UnityEngine;
 using TextSpeech;
 using UnityEngine.Android;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using Voxell.Audio;
 using Random = UnityEngine.Random;
 
@@ -40,14 +41,16 @@ public class SampleSpeechToText : MonoBehaviour
 
     public float startTime;
     public float endTime;
+    
+    [SerializeField] private ScrollRect scroll;
+        
+    [SerializeField] private RectTransform sent;
+    [SerializeField] private RectTransform received;
+
+    private float height;
 
     void Start()
     {
-        VoiceParameter = "en_US/ljspeech_low";
-        NoiseScaleParameter = "0.667";
-        NoiseWParameter = "0.8";
-        LengthScaleParameter = "1";
-        SSMLParameter = "false";
 #if UNITY_IOS
         androidAudioVisualizer.SetActive(false);
         iosAudioVisualizer.SetActive(true);
@@ -97,8 +100,8 @@ public class SampleSpeechToText : MonoBehaviour
     {
         startTime = Time.time;
 #if UNITY_EDITOR
-        SendReply("Hi there");
-        // SendReply("What do you know about Development Alternatives Incorporated - DAI");
+        // SendReply("Hi there");
+        SendReply("What do you know about Development Alternatives Incorporated - DAI");
         // OnResultSpeech("Not support in editor.");
 #else
         SpeechToText.Instance.StopRecording();
@@ -144,6 +147,9 @@ public class SampleSpeechToText : MonoBehaviour
             Role = "user",
             Content = text
         };
+        
+        AppendMessage(newMessage);
+        
         if (messages.Count == 0)
         {
             newMessage.Content = prompt + "\n" + text;
@@ -169,11 +175,25 @@ public class SampleSpeechToText : MonoBehaviour
             // Send the text generated from GPT-3.5 Turbo to Text To Speech API
             await SendPostRequest(message.Content);
             messages.Add(message);
+            AppendMessage(message);
         }
         else
         {
             Debug.LogWarning("No text was generated from this prompt.");
         }
+    }
+    
+    private void AppendMessage(ChatMessage message)
+    {
+        scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+
+        var item = Instantiate(message.Role == "user" ? sent : received, scroll.content);
+        item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
+        item.anchoredPosition = new Vector2(0, -height);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(item);
+        height += item.sizeDelta.y;
+        scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+        scroll.verticalNormalizedPosition = 0;
     }
 
     // Text To Speech starts here
