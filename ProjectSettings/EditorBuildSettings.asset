@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SpeakGPT.unity
     guid: 3d03fa599d3df5a46a089457c133b6d5
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 4fff3c11045eab542b6579bd3aeadad3,
+      type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000,
+      guid: cbf5049402c5b1e45920c2a3ad1dd6ed, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: 5cfedef3a4313b642a2ad8f4a0b59eac, type: 2}

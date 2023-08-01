@@ -2,6 +2,8 @@
   "dependencies": {
     "com.srcnalt.openai-unity": "https://github.com/srcnalt/OpenAI-Unity.git",
     "com.unity.2d.sprite": "1.0.0",
+    "com.unity.adaptiveperformance": "5.0.1",
+    "com.unity.adaptiveperformance.samsung.android": "5.0.0",
     "com.unity.collab-proxy": "2.0.5",
     "com.unity.ide.rider": "3.0.24",
     "com.unity.render-pipelines.universal": "12.1.10",

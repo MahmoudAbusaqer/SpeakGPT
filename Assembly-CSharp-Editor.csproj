@@ -742,119 +742,53 @@
      <Reference Include="System.Xml.XPath.XDocument">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.19f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEngine.TestRunner">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
-     </Reference>
      <Reference Include="UnityEditor.TestRunner">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.VisualScripting.Flow.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualEffectGraph.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
+     <Reference Include="UnityEngine.TestRunner">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.Universal.Shaders">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
-     </Reference>
-     <Reference Include="PPv2URPConverters">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.TextMeshPro.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.VisualEffectGraph.Runtime">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Timeline">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualScripting.Core.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TextMeshPro">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+     <Reference Include="Unity.AdaptivePerformance.Samsung.Android.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.AdaptivePerformance.Samsung.Android.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.State.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Burst.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.Searcher.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.Sprite.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="VX.Util.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\VX.Util.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualScripting.Flow">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
-     </Reference>
      <Reference Include="UnityEditor.UI">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.PlasticSCM.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="VX.Audio">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\VX.Audio.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Rider.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Jobs.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Jobs.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.UI">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.VisualScripting.Core">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Mathematics">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.ShaderGraph.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Burst">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.Universal.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
      </Reference>
      <Reference Include="OpenAI.Runtime">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\OpenAI.Runtime.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Jobs">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Jobs.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualScripting.Shared.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
+     <Reference Include="Unity.AdaptivePerformance.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.AdaptivePerformance.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Timeline.Editor">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Mathematics.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
@@ -865,17 +799,113 @@
      <Reference Include="Unity.Collections">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.AdaptivePerformance">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.AdaptivePerformance.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualScripting.Flow.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualEffectGraph.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="PPv2URPConverters">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualEffectGraph.Runtime">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Profiling.Core">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Profiling.Core.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Timeline">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualScripting.Core.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.TextMeshPro">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.AdaptivePerformance.Simulator.Extension">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.AdaptivePerformance.Simulator.Extension.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Burst.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Sprite.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Core.Runtime">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="VX.Util.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\VX.Util.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.AdaptivePerformance.UI.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.AdaptivePerformance.UI.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualScripting.Flow">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.PlasticSCM.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="VX.Audio">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\VX.Audio.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Jobs.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Jobs.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualScripting.Core">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Mathematics">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.AdaptivePerformance.Simulator.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.AdaptivePerformance.Simulator.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Burst">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Universal.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Jobs">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Jobs.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualScripting.Shared.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Timeline.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+     </Reference>
      <Reference Include="VX.Util.Runtime">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\VX.Util.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="OpenAI.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\OpenAI.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.AdaptivePerformance.Profiler.Editor">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.AdaptivePerformance.Profiler.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.RenderPipelines.Core.Editor">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.AdaptivePerformance.Simulator.VRR.Extension">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.AdaptivePerformance.Simulator.VRR.Extension.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.AdaptivePerformance.Samsung.Android">
+     <HintPath>C:\Unity Projects\UnityAudioVisualizer\Library\ScriptAssemblies\Unity.AdaptivePerformance.Samsung.Android.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>
