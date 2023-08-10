@@ -41,9 +41,9 @@ public class SampleSpeechToText : MonoBehaviour
 
     public float startTime;
     public float endTime;
-    
+
     [SerializeField] private ScrollRect scroll;
-        
+
     [SerializeField] private RectTransform sent;
     [SerializeField] private RectTransform received;
 
@@ -51,6 +51,7 @@ public class SampleSpeechToText : MonoBehaviour
 
     void Start()
     {
+        ChooseVoice(0);
 #if UNITY_IOS
         androidAudioVisualizer.SetActive(false);
         iosAudioVisualizer.SetActive(true);
@@ -147,9 +148,9 @@ public class SampleSpeechToText : MonoBehaviour
             Role = "user",
             Content = text
         };
-        
+
         AppendMessage(newMessage);
-        
+
         if (messages.Count == 0)
         {
             newMessage.Content = prompt + "\n" + text;
@@ -169,9 +170,6 @@ public class SampleSpeechToText : MonoBehaviour
         {
             var message = completionResponse.Choices[0].Message;
             message.Content = message.Content.Trim();
-            // endTime = Time.time;
-            // float time = endTime - startTime;
-            // Debug.Log("chatgpt Time: " + time);
             // Send the text generated from GPT-3.5 Turbo to Text To Speech API
             await SendPostRequest(message.Content);
             messages.Add(message);
@@ -182,7 +180,7 @@ public class SampleSpeechToText : MonoBehaviour
             Debug.LogWarning("No text was generated from this prompt.");
         }
     }
-    
+
     private void AppendMessage(ChatMessage message)
     {
         scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
@@ -201,165 +199,37 @@ public class SampleSpeechToText : MonoBehaviour
     private async Task SendPostRequest(string rawBody)
     {
         // startTime = Time.time;
-        string baseUrl = BaseUrl;
-        var parameters = GetRequestParameters();
-
-        using (UnityWebRequest webRequest = CreateWebRequest(baseUrl, parameters, rawBody))
+        string baseUrl = BaseUrl + "?";
+        foreach (KeyValuePair<string, string> parameter in voice)
         {
-            var tcs = new TaskCompletionSource<bool>();
-
-            webRequest.SendWebRequest().completed += operation =>
-            {
-                if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
-                    webRequest.result == UnityWebRequest.Result.ProtocolError)
-                {
-                    Debug.LogError("POST request error: " + webRequest.error);
-                }
-                else
-                {
-                    ProcessResponse(webRequest.downloadHandler.data);
-                }
-
-                tcs.SetResult(true);
-            };
-
-            await tcs.Task;
+            baseUrl += $"&{parameter.Key}={parameter.Value}";
         }
-    }
-    // private async Task SendPostRequest(string rawBody)
-    // {
-    //     // startTime = Time.time;
-    //     string baseUrl = BaseUrl;
-    //     // Dictionary<string, string> parameters = GetRequestParameters();
-    //     // WWWForm form = new WWWForm();
-    //     //
-    //     // foreach (KeyValuePair<string,string> parameter in parameters)
-    //     // {
-    //     //     form.AddField(parameter.Key, parameter.Value);
-    //     // }
-    //
-    //     using (UnityWebRequest webRequest = CreateWebRequest(baseUrl, rawBody))
-    //     {
-    //         // Debug.Log("POST request: " + webRequest.url);
-    //         var tcs = new TaskCompletionSource<bool>();
-    //
-    //         webRequest.SendWebRequest().completed += operation =>
-    //         {
-    //             if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
-    //                 webRequest.result == UnityWebRequest.Result.ProtocolError)
-    //             {
-    //                 Debug.LogError("POST request error: " + webRequest.error);
-    //             }
-    //             else
-    //             {
-    //                 ProcessResponse(webRequest.downloadHandler.data);
-    //             }
-    //
-    //             tcs.SetResult(true);
-    //         };
-    //
-    //         await tcs.Task;
-    //     }
-    // }
 
-    // The parameters (Query Params) for the Text To Speech POST API
-    // private Dictionary<string, string> GetRequestParameters()
-    // {
-    //     // if (voice == null)
-    //     // {
-    //     //     ChooseVoice(0);
-    //     // }
-    //     // foreach (string key in voice.Keys)
-    //     // {
-    //     //     Debug.Log(key + ": " + voice[key]);
-    //     // }
-    //     return voice = new Dictionary<string, string>()
-    //     {
-    //         { "VoiceParameter", "en_US/ljspeech_low" },
-    //         { "NoiseScaleParameter", "0.667" },
-    //         { "NoiseWParameter", "0.8" },
-    //         { "LengthScaleParameter", "1" },
-    //         { "SSMLParameter", "false" }
-    //     };
-    // } 
-    
-    private Dictionary<string, string> GetRequestParameters()
-    {
-        return new Dictionary<string, string>()
-        {
-            { "voice", "en_US/ljspeech_low" },
-            { "noiseScale", "0.667" },
-            { "noiseW", "0.8" },
-            { "lengthScale", "1" },
-            { "ssml", "false" }
-        };
-    }
-    
-    // private WWWForm GetRequestParameters()
-    // {
-    //     WWWForm form = new WWWForm();
-    //     form.AddField("voice", "en_US/ljspeech_low");
-    //     form.AddField("noiseScale", "0.667");
-    //     form.AddField("noiseW", "0.8");
-    //     form.AddField("lengthScale", "1");
-    //     form.AddField("ssml", "false");
-    //     return form;
-    // }
-
-    // Sending the POST request to the Text To Speech API
-    // The POST request is sent to the API and the response is processed
-    // The response is then converted to an AudioClip and played
-    private UnityWebRequest CreateWebRequest(string url, Dictionary<string, string> parameters, string rawBody)
-    {
-        UnityWebRequest webRequest = UnityWebRequest.Post(url, parameters);
+        UnityWebRequest webRequest = UnityWebRequest.Post(baseUrl, UnityWebRequest.kHttpVerbPOST);
 
         byte[] rawBodyBytes = System.Text.Encoding.UTF8.GetBytes(rawBody);
         webRequest.uploadHandler = new UploadHandlerRaw(rawBodyBytes);
-        webRequest.downloadHandler = new DownloadHandlerAudioClip(url, AudioType.WAV);
+        webRequest.downloadHandler = new DownloadHandlerAudioClip(baseUrl, AudioType.WAV);
 
-        return webRequest;
+        var tcs = new TaskCompletionSource<bool>();
+
+        webRequest.SendWebRequest().completed += operation =>
+        {
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
+                webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("POST request error: " + webRequest.error);
+            }
+            else
+            {
+                ProcessResponse(webRequest.downloadHandler.data);
+            }
+
+            tcs.SetResult(true);
+        };
+
+        await tcs.Task;
     }
-    // private UnityWebRequest CreateWebRequest(string url, string rawBody)
-    // {
-    //     // UnityWebRequest request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
-    //     // request.uploadHandler = new UploadHandlerRaw(GetRequestParameters().data);
-    //     // request.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    //     //
-    //     // byte[] rawBodyBytes = System.Text.Encoding.UTF8.GetBytes(rawBody);
-    //     // request.uploadHandler = new UploadHandlerRaw(rawBodyBytes);
-    //     // request.downloadHandler = new DownloadHandlerAudioClip(url, AudioType.WAV);
-    //     
-    //     UnityWebRequest webRequest = UnityWebRequest.Post(url, GetRequestParameters());
-    //     Debug.Log(webRequest.url);
-    //     byte[] rawBodyBytes = System.Text.Encoding.UTF8.GetBytes(rawBody);
-    //     webRequest.uploadHandler = new UploadHandlerRaw(rawBodyBytes);
-    //     webRequest.downloadHandler = new DownloadHandlerAudioClip(url, AudioType.WAV);
-    //
-    //     return webRequest;
-    // }
-    // private UnityWebRequest CreateWebRequest(string url, Dictionary<string, string> parameters, string rawBody)
-    // {
-    //     // Convert parameters dictionary into WWWForm
-    //     WWWForm formData = new WWWForm();
-    //     foreach (var kvp in parameters)
-    //     {
-    //         formData.AddField(kvp.Key, kvp.Value);
-    //     }
-    //
-    //     UnityWebRequest webRequest = UnityWebRequest.Post(url, formData);
-    //
-    //     byte[] rawBodyBytes = System.Text.Encoding.UTF8.GetBytes(rawBody);
-    //     webRequest.uploadHandler = new UploadHandlerRaw(rawBodyBytes);
-    //     webRequest.downloadHandler = new DownloadHandlerAudioClip(url, AudioType.WAV);
-    //
-    //     return webRequest;
-    // }
-
-
-
-
-
-
 
     // The response from the Text To Speech API is processed here
     // The response is converted to an AudioClip and played
@@ -414,21 +284,13 @@ public class SampleSpeechToText : MonoBehaviour
         {
             case 0:
                 // UK male
-                // VoiceParameter = "en_UK/apope_low";
-                // NoiseScaleParameter = "0.667";
-                // NoiseWParameter = "0.8";
-                // LengthScaleParameter = "1";
-                // SSMLParameter = "false";
-                // break;
-            case 1:
-                // US female
-                VoiceParameter = "en_US/ljspeech_low";
+                VoiceParameter = "en_UK/apope_low";
                 NoiseScaleParameter = "0.667";
                 NoiseWParameter = "0.8";
                 LengthScaleParameter = "1";
                 SSMLParameter = "false";
                 break;
-            case 2:
+            case 1:
                 // US male
                 VoiceParameter = "en_US/hifi-tts_low";
                 NoiseScaleParameter = "0.333";
@@ -436,16 +298,31 @@ public class SampleSpeechToText : MonoBehaviour
                 LengthScaleParameter = "1";
                 SSMLParameter = "false";
                 break;
-            case 3:
+            case 2:
                 // US male
                 VoiceParameter = "en_US/m-ailabs_low";
                 NoiseScaleParameter = "0.2";
                 NoiseWParameter = "0.2";
                 LengthScaleParameter = "1";
                 SSMLParameter = "false";
-
+                break;
+            case 3:
+                // US male
+                VoiceParameter = "en_US/cmu-arctic_low";
+                NoiseScaleParameter = "0.333";
+                NoiseWParameter = "0.333";
+                LengthScaleParameter = "1";
+                SSMLParameter = "false";
                 break;
             case 4:
+                // US female
+                VoiceParameter = "en_US/ljspeech_low";
+                NoiseScaleParameter = "0.667";
+                NoiseWParameter = "0.8";
+                LengthScaleParameter = "1";
+                SSMLParameter = "false";
+                break;
+            case 5:
                 // UK female
                 VoiceParameter = "en_US/vctk_low";
                 NoiseScaleParameter = "0.333";
@@ -453,38 +330,23 @@ public class SampleSpeechToText : MonoBehaviour
                 LengthScaleParameter = "1.2";
                 SSMLParameter = "false";
                 break;
-            case 5:
-                // US male
-                VoiceParameter = "en_US/cmu-artctic_low";
-                NoiseScaleParameter = "0.333";
-                NoiseWParameter = "0.333";
+            default:
+                // UK male
+                VoiceParameter = "en_UK/apope_low";
+                NoiseScaleParameter = "0.667";
+                NoiseWParameter = "0.8";
                 LengthScaleParameter = "1";
                 SSMLParameter = "false";
                 break;
-            // default:
-            //     // UK male
-            //     VoiceParameter = "en_UK/apope_low";
-            //     NoiseScaleParameter = "0.667";
-            //     NoiseWParameter = "0.8";
-            //     LengthScaleParameter = "1";
-            //     SSMLParameter = "false";
-            //     break;
         }
 
         voice = new Dictionary<string, string>()
         {
-            { "VoiceParameter", VoiceParameter },
-            { "NoiseScaleParameter", NoiseScaleParameter },
-            { "NoiseWParameter", NoiseWParameter },
-            { "LengthScaleParameter", LengthScaleParameter },
-            { "SSMLParameter", SSMLParameter }
+            { "voice", VoiceParameter },
+            { "noiseScale", NoiseScaleParameter },
+            { "noiseW", NoiseWParameter },
+            { "lengthScale", LengthScaleParameter },
+            { "ssml", SSMLParameter }
         };
-
-        foreach (string key in voice.Keys)
-        {
-            Debug.Log(key + ": " + voice[key]);
-        }
-
-        Debug.Log("voice: " + voice.Values.ToString());
     }
 }
