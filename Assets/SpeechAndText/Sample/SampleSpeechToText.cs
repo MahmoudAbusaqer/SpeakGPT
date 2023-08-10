@@ -5,6 +5,7 @@ using UnityEngine;
 using TextSpeech;
 using UnityEngine.Android;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using Voxell.Audio;
 using Random = UnityEngine.Random;
 
@@ -41,13 +42,16 @@ public class SampleSpeechToText : MonoBehaviour
     public float startTime;
     public float endTime;
 
+    [SerializeField] private ScrollRect scroll;
+
+    [SerializeField] private RectTransform sent;
+    [SerializeField] private RectTransform received;
+
+    private float height;
+
     void Start()
     {
-        VoiceParameter = "en_US/ljspeech_low";
-        NoiseScaleParameter = "0.667";
-        NoiseWParameter = "0.8";
-        LengthScaleParameter = "1";
-        SSMLParameter = "false";
+        ChooseVoice(0);
 #if UNITY_IOS
         androidAudioVisualizer.SetActive(false);
         iosAudioVisualizer.SetActive(true);
@@ -97,8 +101,8 @@ public class SampleSpeechToText : MonoBehaviour
     {
         startTime = Time.time;
 #if UNITY_EDITOR
-        SendReply("Hi there");
-        // SendReply("What do you know about Development Alternatives Incorporated - DAI");
+        // SendReply("Hi there");
+        SendReply("What do you know about Development Alternatives Incorporated - DAI");
         // OnResultSpeech("Not support in editor.");
 #else
         SpeechToText.Instance.StopRecording();
@@ -144,6 +148,9 @@ public class SampleSpeechToText : MonoBehaviour
             Role = "user",
             Content = text
         };
+
+        AppendMessage(newMessage);
+
         if (messages.Count == 0)
         {
             newMessage.Content = prompt + "\n" + text;
@@ -163,12 +170,10 @@ public class SampleSpeechToText : MonoBehaviour
         {
             var message = completionResponse.Choices[0].Message;
             message.Content = message.Content.Trim();
-            endTime = Time.time;
-            float time = endTime - startTime;
-            Debug.Log("chatgpt Time: " + time);
             // Send the text generated from GPT-3.5 Turbo to Text To Speech API
             await SendPostRequest(message.Content);
             messages.Add(message);
+            AppendMessage(message);
         }
         else
         {
@@ -176,63 +181,54 @@ public class SampleSpeechToText : MonoBehaviour
         }
     }
 
+    private void AppendMessage(ChatMessage message)
+    {
+        scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+
+        var item = Instantiate(message.Role == "user" ? sent : received, scroll.content);
+        item.GetChild(0).GetChild(0).GetComponent<Text>().text = message.Content;
+        item.anchoredPosition = new Vector2(0, -height);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(item);
+        height += item.sizeDelta.y;
+        scroll.content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+        scroll.verticalNormalizedPosition = 0;
+    }
+
     // Text To Speech starts here
     // Text to Speech to make the AI speak
     private async Task SendPostRequest(string rawBody)
     {
         // startTime = Time.time;
-        string baseUrl = BaseUrl;
-        var parameters = GetRequestParameters();
-
-        using (UnityWebRequest webRequest = CreateWebRequest(baseUrl, parameters, rawBody))
+        string baseUrl = BaseUrl + "?";
+        foreach (KeyValuePair<string, string> parameter in voice)
         {
-            var tcs = new TaskCompletionSource<bool>();
-
-            webRequest.SendWebRequest().completed += operation =>
-            {
-                if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
-                    webRequest.result == UnityWebRequest.Result.ProtocolError)
-                {
-                    Debug.LogError("POST request error: " + webRequest.error);
-                }
-                else
-                {
-                    ProcessResponse(webRequest.downloadHandler.data);
-                }
-
-                tcs.SetResult(true);
-            };
-
-            await tcs.Task;
+            baseUrl += $"&{parameter.Key}={parameter.Value}";
         }
-    }
 
-    // The parameters (Query Params) for the Text To Speech POST API
-    private Dictionary<string, string> GetRequestParameters()
-    {
-        // if (voice == null)
-        // {
-        //     ChooseVoice(0);
-        // }
-        // foreach (string key in voice.Keys)
-        // {
-        //     Debug.Log(key + ": " + voice[key]);
-        // }
-        return voice;
-    } 
-
-    // Sending the POST request to the Text To Speech API
-    // The POST request is sent to the API and the response is processed
-    // The response is then converted to an AudioClip and played
-    private UnityWebRequest CreateWebRequest(string url, Dictionary<string, string> parameters, string rawBody)
-    {
-        UnityWebRequest webRequest = UnityWebRequest.Post(url, parameters);
+        UnityWebRequest webRequest = UnityWebRequest.Post(baseUrl, UnityWebRequest.kHttpVerbPOST);
 
         byte[] rawBodyBytes = System.Text.Encoding.UTF8.GetBytes(rawBody);
         webRequest.uploadHandler = new UploadHandlerRaw(rawBodyBytes);
-        webRequest.downloadHandler = new DownloadHandlerAudioClip(url, AudioType.WAV);
+        webRequest.downloadHandler = new DownloadHandlerAudioClip(baseUrl, AudioType.WAV);
 
-        return webRequest;
+        var tcs = new TaskCompletionSource<bool>();
+
+        webRequest.SendWebRequest().completed += operation =>
+        {
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
+                webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("POST request error: " + webRequest.error);
+            }
+            else
+            {
+                ProcessResponse(webRequest.downloadHandler.data);
+            }
+
+            tcs.SetResult(true);
+        };
+
+        await tcs.Task;
     }
 
     // The response from the Text To Speech API is processed here
@@ -249,9 +245,9 @@ public class SampleSpeechToText : MonoBehaviour
             int randomValue1 = Random.Range(0, 2) == 0 ? -1 : 1;
             int randomValue2 = Random.Range(0, 2) == 0 ? -1 : 1;
             audioCore.idleVelocity = new Vector2(randomValue1 * 1, randomValue2 * 1);
-            endTime = Time.time;
-            float timeTaken = endTime - startTime;
-            Debug.Log("tts Time taken: " + timeTaken);
+            // endTime = Time.time;
+            // float timeTaken = endTime - startTime;
+            // Debug.Log("tts Time taken: " + timeTaken);
             _audioSource.Play();
         }
         else
@@ -288,21 +284,13 @@ public class SampleSpeechToText : MonoBehaviour
         {
             case 0:
                 // UK male
-                // VoiceParameter = "en_UK/apope_low";
-                // NoiseScaleParameter = "0.667";
-                // NoiseWParameter = "0.8";
-                // LengthScaleParameter = "1";
-                // SSMLParameter = "false";
-                // break;
-            case 1:
-                // US female
-                VoiceParameter = "en_US/ljspeech_low";
+                VoiceParameter = "en_UK/apope_low";
                 NoiseScaleParameter = "0.667";
                 NoiseWParameter = "0.8";
                 LengthScaleParameter = "1";
                 SSMLParameter = "false";
                 break;
-            case 2:
+            case 1:
                 // US male
                 VoiceParameter = "en_US/hifi-tts_low";
                 NoiseScaleParameter = "0.333";
@@ -310,16 +298,31 @@ public class SampleSpeechToText : MonoBehaviour
                 LengthScaleParameter = "1";
                 SSMLParameter = "false";
                 break;
-            case 3:
+            case 2:
                 // US male
                 VoiceParameter = "en_US/m-ailabs_low";
                 NoiseScaleParameter = "0.2";
                 NoiseWParameter = "0.2";
                 LengthScaleParameter = "1";
                 SSMLParameter = "false";
-
+                break;
+            case 3:
+                // US male
+                VoiceParameter = "en_US/cmu-arctic_low";
+                NoiseScaleParameter = "0.333";
+                NoiseWParameter = "0.333";
+                LengthScaleParameter = "1";
+                SSMLParameter = "false";
                 break;
             case 4:
+                // US female
+                VoiceParameter = "en_US/ljspeech_low";
+                NoiseScaleParameter = "0.667";
+                NoiseWParameter = "0.8";
+                LengthScaleParameter = "1";
+                SSMLParameter = "false";
+                break;
+            case 5:
                 // UK female
                 VoiceParameter = "en_US/vctk_low";
                 NoiseScaleParameter = "0.333";
@@ -327,38 +330,23 @@ public class SampleSpeechToText : MonoBehaviour
                 LengthScaleParameter = "1.2";
                 SSMLParameter = "false";
                 break;
-            case 5:
-                // US male
-                VoiceParameter = "en_US/cmu-artctic_low";
-                NoiseScaleParameter = "0.333";
-                NoiseWParameter = "0.333";
+            default:
+                // UK male
+                VoiceParameter = "en_UK/apope_low";
+                NoiseScaleParameter = "0.667";
+                NoiseWParameter = "0.8";
                 LengthScaleParameter = "1";
                 SSMLParameter = "false";
                 break;
-            // default:
-            //     // UK male
-            //     VoiceParameter = "en_UK/apope_low";
-            //     NoiseScaleParameter = "0.667";
-            //     NoiseWParameter = "0.8";
-            //     LengthScaleParameter = "1";
-            //     SSMLParameter = "false";
-            //     break;
         }
 
         voice = new Dictionary<string, string>()
         {
-            { "VoiceParameter", VoiceParameter },
-            { "NoiseScaleParameter", NoiseScaleParameter },
-            { "NoiseWParameter", NoiseWParameter },
-            { "LengthScaleParameter", LengthScaleParameter },
-            { "SSMLParameter", SSMLParameter }
+            { "voice", VoiceParameter },
+            { "noiseScale", NoiseScaleParameter },
+            { "noiseW", NoiseWParameter },
+            { "lengthScale", LengthScaleParameter },
+            { "ssml", SSMLParameter }
         };
-
-        foreach (string key in voice.Keys)
-        {
-            Debug.Log(key + ": " + voice[key]);
-        }
-
-        Debug.Log("voice: " + voice.Values.ToString());
     }
 }
