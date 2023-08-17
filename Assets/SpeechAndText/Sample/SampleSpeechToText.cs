@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using OpenAI;
 using UnityEngine;
 using TextSpeech;
+using TMPro;
 using UnityEngine.Android;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -49,8 +52,19 @@ public class SampleSpeechToText : MonoBehaviour
 
     private float height;
 
+    public Dropdown voiceDropdown;
+
+    private String language;
+
+    // public TMP_Text voiceText;
+
+
+    // private TMP_Dropdown.OptionData voicesEnglish = new TMP_Dropdown.OptionData();
+    // private TMP_Dropdown.OptionData voicesSpanish = new TMP_Dropdown.OptionData();
+
     void Start()
     {
+        ChooseLanguage(0);
         ChooseVoice(0);
 #if UNITY_IOS
         androidAudioVisualizer.SetActive(false);
@@ -102,7 +116,8 @@ public class SampleSpeechToText : MonoBehaviour
         startTime = Time.time;
 #if UNITY_EDITOR
         // SendReply("Hi there");
-        SendReply("What do you know about Development Alternatives Incorporated - DAI");
+        // SendReply("What do you know about Development Alternatives Incorporated - DAI");
+        SendReply("dime un hecho divertido");
         // OnResultSpeech("Not support in editor.");
 #else
         SpeechToText.Instance.StopRecording();
@@ -278,75 +293,439 @@ public class SampleSpeechToText : MonoBehaviour
     }
     // Text To Speech ends here
 
-    public void ChooseVoice(int index)
+    // public void ChooseVoice(int index)
+    // {
+    //     switch (index)
+    //     {
+    //         // case 0:
+    //         //     // UK male
+    //         //     voicesEnglish[0].Values.ToString();
+    //         //     // VoiceParameter = "en_UK/apope_low";
+    //         //     // NoiseScaleParameter = "0.667";
+    //         //     // NoiseWParameter = "0.8";
+    //         //     // LengthScaleParameter = "1";
+    //         //     // SSMLParameter = "false";
+    //         //     // // voicesEnglish.text = "Male 1";
+    //         //     // Setting("en-GB");
+    //         //     break;
+    //         // case 1:
+    //         //     // US male
+    //         //     VoiceParameter = "en_US/hifi-tts_low";
+    //         //     NoiseScaleParameter = "0.333";
+    //         //     NoiseWParameter = "0.333";
+    //         //     LengthScaleParameter = "1";
+    //         //     SSMLParameter = "false";
+    //         //     Setting("en-US");
+    //         //     // voicesEnglish.text = "Male 2";
+    //         //     break;
+    //         // case 2:
+    //         //     // US male
+    //         //     VoiceParameter = "en_US/m-ailabs_low";
+    //         //     NoiseScaleParameter = "0.2";
+    //         //     NoiseWParameter = "0.2";
+    //         //     LengthScaleParameter = "1";
+    //         //     SSMLParameter = "false";
+    //         //     Setting("en-US");
+    //         //     // voicesEnglish.text = "Male 3";
+    //         //     break;
+    //         // case 3:
+    //         //     // US male
+    //         //     VoiceParameter = "en_US/cmu-arctic_low";
+    //         //     NoiseScaleParameter = "0.333";
+    //         //     NoiseWParameter = "0.333";
+    //         //     LengthScaleParameter = "1";
+    //         //     SSMLParameter = "false";
+    //         //     Setting("en-US");
+    //         //     // voicesEnglish.text = "Male 4";
+    //         //     break;
+    //         // case 4:
+    //         //     // US female
+    //         //     VoiceParameter = "en_US/ljspeech_low";
+    //         //     NoiseScaleParameter = "0.667";
+    //         //     NoiseWParameter = "0.8";
+    //         //     LengthScaleParameter = "1";
+    //         //     SSMLParameter = "false";
+    //         //     Setting("en-US");
+    //         //     // voicesEnglish.text = "Female 1";
+    //         //     break;
+    //         // case 5:
+    //         //     // UK female
+    //         //     VoiceParameter = "en_US/vctk_low";
+    //         //     NoiseScaleParameter = "0.333";
+    //         //     NoiseWParameter = "0.333";
+    //         //     LengthScaleParameter = "1.2";
+    //         //     SSMLParameter = "false";
+    //         //     Setting("en-GB");
+    //         //     // voicesEnglish.text = "Female 2";
+    //         //     break;
+    //         // case 6:
+    //         //     // Español male
+    //         //     VoiceParameter = "es_ES/m-ailabs_low";
+    //         //     NoiseScaleParameter = "0.333";
+    //         //     NoiseWParameter = "0.333";
+    //         //     LengthScaleParameter = "1";
+    //         //     SSMLParameter = "false";
+    //         //     Setting("es-ES");
+    //         //     // voicesSpanish.text = "male 1";
+    //         //     break;
+    //         // default:
+    //         //     // UK male
+    //         //     VoiceParameter = "en_UK/apope_low";
+    //         //     NoiseScaleParameter = "0.667";
+    //         //     NoiseWParameter = "0.8";
+    //         //     LengthScaleParameter = "1";
+    //         //     SSMLParameter = "false";
+    //         //     Setting("en-US");
+    //         //     break;
+    //     }
+    //
+    //     voice = new Dictionary<string, string>()
+    //     {
+    //         { "voice", VoiceParameter },
+    //         { "noiseScale", NoiseScaleParameter },
+    //         { "noiseW", NoiseWParameter },
+    //         { "lengthScale", LengthScaleParameter },
+    //         { "ssml", SSMLParameter }
+    //     };
+    // }
+
+    public void ChooseLanguage(int index)
     {
+        voiceDropdown.ClearOptions();
+        
         switch (index)
         {
             case 0:
-                // UK male
-                VoiceParameter = "en_UK/apope_low";
-                NoiseScaleParameter = "0.667";
-                NoiseWParameter = "0.8";
-                LengthScaleParameter = "1";
-                SSMLParameter = "false";
+                Setting("en-US");
+                language = "en-US";
+                voiceDropdown.AddOptions(voicesEnglish.Keys.ToList());
                 break;
             case 1:
-                // US male
-                VoiceParameter = "en_US/hifi-tts_low";
-                NoiseScaleParameter = "0.333";
-                NoiseWParameter = "0.333";
-                LengthScaleParameter = "1";
-                SSMLParameter = "false";
+                Setting("es-ES");
+                language = "es-ES";
+                voiceDropdown.AddOptions(voicesSpanish.Keys.ToList());
                 break;
             case 2:
-                // US male
-                VoiceParameter = "en_US/m-ailabs_low";
-                NoiseScaleParameter = "0.2";
-                NoiseWParameter = "0.2";
-                LengthScaleParameter = "1";
-                SSMLParameter = "false";
+                Setting("fr-FR");
+                language = "fr-FR";
+                voiceDropdown.AddOptions(voicesFrench.Keys.ToList());
                 break;
             case 3:
-                // US male
-                VoiceParameter = "en_US/cmu-arctic_low";
-                NoiseScaleParameter = "0.333";
-                NoiseWParameter = "0.333";
-                LengthScaleParameter = "1";
-                SSMLParameter = "false";
+                Setting("ru-RU");
+                language = "ru-RU";
+                voiceDropdown.AddOptions(voicesRussian.Keys.ToList());
                 break;
             case 4:
-                // US female
-                VoiceParameter = "en_US/ljspeech_low";
-                NoiseScaleParameter = "0.667";
-                NoiseWParameter = "0.8";
-                LengthScaleParameter = "1";
-                SSMLParameter = "false";
+                Setting("de-DE");
+                language = "de-DE";
+                voiceDropdown.AddOptions(voicesGerman.Keys.ToList());
                 break;
             case 5:
-                // UK female
-                VoiceParameter = "en_US/vctk_low";
-                NoiseScaleParameter = "0.333";
-                NoiseWParameter = "0.333";
-                LengthScaleParameter = "1.2";
-                SSMLParameter = "false";
+                Setting("it-IT");
+                language = "it-IT";
+                voiceDropdown.AddOptions(voicesItalian.Keys.ToList());
                 break;
             default:
-                // UK male
-                VoiceParameter = "en_UK/apope_low";
-                NoiseScaleParameter = "0.667";
-                NoiseWParameter = "0.8";
-                LengthScaleParameter = "1";
-                SSMLParameter = "false";
+                Setting("en-US");
+                language = "en-US";
                 break;
         }
-
-        voice = new Dictionary<string, string>()
-        {
-            { "voice", VoiceParameter },
-            { "noiseScale", NoiseScaleParameter },
-            { "noiseW", NoiseWParameter },
-            { "lengthScale", LengthScaleParameter },
-            { "ssml", SSMLParameter }
-        };
+        
+        ChooseVoice(0);
     }
+
+    public void ChooseVoice(int index)
+    {
+        // Make sure voiceDropdown.options has elements
+        if (index < 0 || index >= voiceDropdown.options.Count)
+        {
+            Debug.LogError("Invalid index.");
+            return;
+        }
+
+        if (language.Equals("en-US"))
+        {
+            if (voicesEnglish.TryGetValue(voiceDropdown.options[index].text, out var englishVoice))
+            {
+                voice = englishVoice;
+            }
+            else
+            {
+                Debug.LogError("English voice not found.");
+            }
+        }
+        else if (language.Equals("es-ES"))
+        {
+            if (voicesSpanish.TryGetValue(voiceDropdown.options[index].text, out var spanishVoice))
+            {
+                voice = spanishVoice;
+            }
+            else
+            {
+                Debug.LogError("Spanish voice not found.");
+            }
+        }
+        else if (language.Equals("fr-FR"))
+        {
+            if (voicesFrench.TryGetValue(voiceDropdown.options[index].text, out var frenchVoice))
+            {
+                voice = frenchVoice;
+            }
+            else
+            {
+                Debug.LogError("French voice not found.");
+            }
+        }
+        else if (language.Equals("ru-RU"))
+        {
+            if (voicesRussian.TryGetValue(voiceDropdown.options[index].text, out var russianVoice))
+            {
+                voice = russianVoice;
+            }
+            else
+            {
+                Debug.LogError("Russian voice not found.");
+            }
+        }
+        else if(language.Equals("de-DE"))
+        {
+            if (voicesGerman.TryGetValue(voiceDropdown.options[index].text, out var germanVoice))
+            {
+                voice = germanVoice;
+            }
+            else
+            {
+                Debug.LogError("German voice not found.");
+            }
+        }
+        else if (language.Equals("it-IT"))
+        {
+            if (voicesItalian.TryGetValue(voiceDropdown.options[index].text, out var italianVoice))
+            {
+                voice = italianVoice;
+            }
+            else
+            {
+                Debug.LogError("Italian voice not found.");
+            }
+        }
+        else
+        {
+            // Default to English if language is unknown
+            if (voicesEnglish.TryGetValue(voiceDropdown.options[index].text, out var defaultVoice))
+            {
+                voice = defaultVoice;
+            }
+            else
+            {
+                Debug.LogError("Voice not found for default language.");
+            }
+        }
+    }
+
+    private Dictionary<String, Dictionary<String, String>> voicesEnglish =
+        new Dictionary<String, Dictionary<String, String>>()
+        {
+            {
+                "Male 1",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "en_UK/apope_low" },
+                    { "noiseScale", "0.667" },
+                    { "noiseW", "0.8" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            },
+            {
+                "Male 2",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "en_US/hifi-tts_low" },
+                    { "noiseScale", "0.333" },
+                    { "noiseW", "0.333" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            },
+            {
+                "Male 3",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "en_US/m-ailabs_low" },
+                    { "noiseScale", "0.2" },
+                    { "noiseW", "0.2" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            },
+            {
+                "Male 4",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "en_US/cmu-arctic_low" },
+                    { "noiseScale", "0.333" },
+                    { "noiseW", "0.333" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            },
+            {
+                "Female 1",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "en_US/ljspeech_low" },
+                    { "noiseScale", "0.667" },
+                    { "noiseW", "0.8" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            },
+            {
+                "Female 2",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "en_US/vctk_low" },
+                    { "noiseScale", "0.333" },
+                    { "noiseW", "0.333" },
+                    { "lengthScale", "1.2" },
+                    { "ssml", "false" }
+                }
+            }
+        };
+
+    private Dictionary<String, Dictionary<String, String>> voicesSpanish =
+        new Dictionary<String, Dictionary<String, String>>()
+        {
+            {
+                "Masculino 1",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "es_ES/m-ailabs_low" },
+                    { "noiseScale", "0.333" },
+                    { "noiseW", "0.333" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            }
+        };
+    
+    private Dictionary<String, Dictionary<String, String>> voicesFrench =
+        new Dictionary<String, Dictionary<String, String>>()
+        {
+            {
+                "Femelle 1",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "fr_FR/m-ailabs_low" },
+                    { "noiseScale", "0.667" },
+                    { "noiseW", "0.8" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            },
+            {
+                "Femelle 2",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "fr_FR/siwis_low" },
+                    { "noiseScale", "0.667" },
+                    { "noiseW", "0.8" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            },
+            {
+                "Mâle 1",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "fr_FR/tom_low" },
+                    { "noiseScale", "0.667" },
+                    { "noiseW", "0.8" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            }
+        };
+    
+    private Dictionary<String, Dictionary<String, String>> voicesRussian =
+        new Dictionary<String, Dictionary<String, String>>()
+        {
+            {
+                "Мужской 1",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "ru_RU/multi_low" },
+                    { "noiseScale", "0.667" },
+                    { "noiseW", "0.8" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            }
+        };
+    
+    private Dictionary<String, Dictionary<String, String>> voicesGerman =
+        new Dictionary<String, Dictionary<String, String>>()
+        {
+            {
+                "Männlich 1",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "de_DE/thorsten-emotion_low" },
+                    { "noiseScale", "0.667" },
+                    { "noiseW", "0.8" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            },
+            {
+                "Männlich 2",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "de_DE/thorsten_low" },
+                    { "noiseScale", "0.667" },
+                    { "noiseW", "0.8" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            },
+            {
+                "Weiblich 1",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "de_DE/m-ailabs_low" },
+                    { "noiseScale", "0.333" },
+                    { "noiseW", "0.333" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            }
+        };
+    
+    private Dictionary<String, Dictionary<String, String>> voicesItalian =
+        new Dictionary<String, Dictionary<String, String>>()
+        {
+            {
+                "Maschio 1",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "it_IT/mls_low" },
+                    { "noiseScale", "0.333" },
+                    { "noiseW", "0.333" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            },
+            {
+                "Maschio 2",
+                new Dictionary<string, string>()
+                {
+                    { "voice", "it_IT/riccardo-fasol_low" },
+                    { "noiseScale", "0.667" },
+                    { "noiseW", "0.8" },
+                    { "lengthScale", "1" },
+                    { "ssml", "false" }
+                }
+            }
+        };
 }
